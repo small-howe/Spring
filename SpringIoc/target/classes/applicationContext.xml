@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--配置 User类的 控制权 IOC控制反转  顺便 属性注入 也就是我们常说的 依赖注入 DI-->
+    <!--    <bean class="com.tangwh.model.User" id="user">-->
+    <!--        &lt;!&ndash;     构造方法注入&ndash;&gt;-->
+    <!--        <constructor-arg name="id" value="1"/>-->
+    <!--        <constructor-arg name="username" value="唐同学"/>-->
+    <!--        <constructor-arg name="address" value="陕西西安"/>-->
+    <!--    </bean>-->
+
+
+    <bean class="com.tangwh.model.User" id="user2">
+        <!--根据 属性Set方法 注入-->
+        <property name="id" value="2"/>
+        <property name="username" value="王同学"/>
+        <property name="address" value="西安"/>
+    </bean>
+
+
+    <!--    p 命名空间注入 底层也是 set 方法-->
+    <bean class="com.tangwh.model.User" id="user3" p:username="javaboy" p:id="3" p:address="陕西">
+    </bean>
+
+
+    <!--    静态工厂实例注入-->
+
+    <bean class="com.tangwh.OkHttpStaticFactory" factory-method="getInstance" id="httpClient"/>
+
+
+    <!--    实例工厂方注入  分为两步 第一步 new对象出来第二部 调用方法 -->
+    <bean class="com.tangwh.OkHttpFactory" id="okHttpFactory"/>
+    <bean class="okhttp3.OkHttpClient" factory-bean="okHttpFactory" factory-method="getInstance" id="okHttpClient"/>
+
+
+    <!--    对象注入 分为两步 第一步 原本的对象User 还有 User里面的 Cat对象-->
+    <bean class="com.tangwh.model.User" id="user5">
+        <!--根据 属性Set方法 注入-->
+        <property name="id" value="4"/>
+        <property name="username" value="王同学"/>
+        <property name="address" value="西安"/>
+
+        <!--        引用下面的对象  对象注入-->
+        <!--        <property name="cat" ref="cat"/>-->
+        <!--        对象注入 不用引用 自己在里面定义一个bean-->
+        <property name="cat">
+            <bean class="com.tangwh.model.Cat">
+                <property name="name" value="小宝"/>
+                <property name="age" value="18"/>
+            </bean>
+        </property>
+
+        <!--        数组注入-->
+        <property name="cats">
+            <array>
+                <ref bean="cat"/>
+                <bean class="com.tangwh.model.Cat" id="cat2">
+                    <property name="name" value="小黑"/>
+                    <property name="age" value="5"/>
+                </bean>
+            </array>
+        </property>
+        <!--        集合注入-->
+        <property name="favorites">
+            <list>
+                <value>足球</value>
+                <value>篮球</value>
+            </list>
+        </property>
+
+        <!--        map注入-->
+        <property name="details">
+            <map>
+                <entry key="gender" value="男性"/>
+                <entry key="age" value="99"/>
+            </map>
+        </property>
+        <property name="info">
+            <props>
+                <prop key="phone">123456789</prop>
+            </props>
+        </property>
+
+    </bean>
+
+
+    <!--    引用的对象 cat-->
+    <bean class="com.tangwh.model.Cat" id="cat">
+        <property name="name" value="小猫咪"/>
+        <property name="age" value="3"/>
+
+    </bean>
+</beans>
