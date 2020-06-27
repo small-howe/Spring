@@ -70,7 +70,6 @@
                 <value>篮球</value>
             </list>
         </property>
-
         <!--        map注入-->
         <property name="details">
             <map>
