@@ -90,6 +90,29 @@
     <bean class="com.tangwh.model.Cat" id="cat">
         <property name="name" value="小猫咪"/>
         <property name="age" value="3"/>
+    </bean>
 
+
+    <!--   XML 配置  环境切换  变成 多例:scope="prototype"-->
+<!--    <beans profile="dev">-->
+<!--        <bean class="com.tangwh.Datasource" id="devDs" >-->
+<!--            <property name="url" value="jdbc:mysql///vhr"/>-->
+<!--            <property name="password" value="root"/>-->
+<!--            <property name="username" value="root"/>-->
+<!--        </bean>-->
+<!--    </beans>-->
+<!--    <beans profile="prod">-->
+<!--        <bean class="com.tangwh.Datasource" id="prodDs">-->
+<!--            <property name="url" value="jdbc:mysql/192.168.10.20//vhr"/>-->
+<!--            <property name="password" value="root"/>-->
+<!--            <property name="username" value="13455"/>-->
+<!--        </bean>-->
+<!--    </beans>-->
+
+<!-- 单独写一个 Bean 区分 id 和 name的区别  id和name 基本一样 name:d1,d2,d3,其中一个即可 id:是一个整体-->
+    <bean class="com.tangwh.Datasource" name="ds" scope="prototype">
+        <property name="url" value="jdbc:mysql/192.168.10.20//vhr"/>
+        <property name="password" value="root"/>
+        <property name="username" value="13455"/>
     </bean>
 </beans>
